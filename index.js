@@ -1,8 +1,12 @@
+"use strict";
+require("dotenv").config();
 const Joi = require("joi"); //Joi V.13.1.0
 const express = require("express");
+const supertest = require("supertest");
 const func = require("joi/lib/types/func");
 const app = express();
 const mongoose = require("mongoose");
+const request = supertest("process.env.Link");
 
 app.use(express.json());
 
@@ -13,9 +17,13 @@ const courses = [
   { id: 4, name: "loni-4" },
 ];
 
-app.get("/api/courses", (req, res) => {
-  res.send(courses);
+app.get("/yahoo", async (req, res) => {
+  res.send(res);
 });
+
+// app.get("get", (req, res) => {
+//   res.send(courses);
+// });
 
 app.get("/api/courses/:id", (req, res) => {
   const course = courses.find((c) => c.id === parseInt(req.params.id));
@@ -65,4 +73,3 @@ function validateCourse(course) {
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listenig on port ${port}...`));
-
